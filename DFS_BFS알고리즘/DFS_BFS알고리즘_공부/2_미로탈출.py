@@ -23,7 +23,7 @@ dx=[-1,1,0,0]
 dy=[0,0,-1,1]
 
 #bfs구현
-def bfs(x,y):
+def bfs(x,y):   
     #큐 구현을 위해 deque사용
     queue=deque()
     queue.append((x,y))
