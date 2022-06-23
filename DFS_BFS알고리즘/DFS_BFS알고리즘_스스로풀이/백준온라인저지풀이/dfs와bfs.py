@@ -11,59 +11,49 @@
 V부터 방문된 점을 순서대로 출력하면 된다.
 """
 from collections import deque
+import sys
+
 n,m,v=map(int,input().split())
-graph=[]
+graph=[[] for _ in range(n+1)]
 
 for _ in range(m):
-    graph.append(list(map(int,input().split())))
+    a,b=map(int,sys.stdin.readline().split())
+    graph[a].append(b)
+    graph[b].append(a)
+
 
 
 def dfs(v):
-    visited[v]=True
-    print(v,end=' ')
-    close=[]
-    for i in graph:
-        if v in i:
-            if i[0]==v:
-                if visited[i[1]]==False:
-                    close.append(i[1])
-            else:
-                if visited[i[0]]==False:
-                    close.append(i[0])
-    if len(close)==0:
-        return
-    dfs(min(close))
-    
+    stack=[]
+    stack.append(v)
+    while stack:
+        print(stack)
+        node=stack.pop()
+        if visited[node]==False:
+            visited[node]=True
+            print(node)
+            stack.extend(graph[node])
 
 def bfs(v):
     queue=deque()
     queue.append(v)
     visited[v]=True
-    while queue:
-        a=queue.popleft()
+    print(v,end=" ")
+    while(queue):
+        node=queue.popleft()
+        for i in graph[node]:
+            if visited[i]==False:
+                queue.append(i)
+                visited[i]=True
+                print(i,end=" ")
 
-        print(a,end=' ')
-        close=[]
-        for i in graph:
-         if a in i:
-                if i[0]==a:
-                    if visited[i[1]]==False:
-                        close.append(i[1])
-                        visited[i[1]]=True
-                else:
-                    if visited[i[0]]==False:
-                        close.append(i[0])
-                        visited[i[0]]=True
-        if len(close)==0:
-            continue
-        close.sort()
-        for i in range(len(close)):
-            queue.append(close[i])
-    
-
-
+#출력부
+for i in range(n+1):
+    graph[i].sort(reverse=True)
 visited=[False]*(n+1)
 dfs(v)
-print("\n",end='')
+for i in range(n+1):
+    graph[i].sort()
+print("\n",end="")
 visited=[False]*(n+1)
 bfs(v)
