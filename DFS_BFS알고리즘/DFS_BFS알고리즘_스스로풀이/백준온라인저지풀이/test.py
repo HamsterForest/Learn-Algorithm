@@ -1,3 +1,5 @@
-a=[12,13,24,56,78,96]
-print(a.index(96))
+a=[1,2,3,3,4]
+print(a)
+a=set(a)
+print(a)
 
